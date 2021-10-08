@@ -1,9 +1,9 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import { IconsGenerator } from './IconsGenerator'
+import React, { useState, useEffect } from 'react';
+import { Card } from './Card'
 import '../styles/gameBoard.scss'
 import { v4 as uuidv4 } from 'uuid';
 
-const emojiPool = [
+const cardPool = [
     {
         type: 'faceGrin',
         image: '😃'
@@ -39,41 +39,38 @@ const emojiPool = [
     }
 ];
 
-const createShuffledDeck = poolObject => {
-    poolObject = [...poolObject, ...poolObject];
-    console.log(poolObject)
-    let count = poolObject.length;
+const createShuffledDeck = deck => {
+    deck = [...deck, ...deck];
+    let count = deck.length;
     while (count > 0) {
-        let randomPick = Math.floor(Math.random() * count)
+        let randomPick = Math.floor(Math.random() * count);
         count--;
-        [poolObject[count], poolObject[randomPick]] = [poolObject[randomPick], poolObject[count]];
+        [deck[count], deck[randomPick]] = [deck[randomPick], deck[count]];
     }
-    return poolObject.map(each => ({ ...each, 'id': uuidv4() }));
+    return deck.map(each => ({ ...each, 'id': uuidv4() }));
 }
 
-// there can only be 2 in openCards before evaluation
-// there is always even number of cards in inactiveCards
 export const GameBoard = () => {
     const [inactiveCards, setInactiveCards] = useState([]);
     const [disableAllClick, setDisableAllClick] = useState(false);
     const [openCards, setOpenCards] = useState([]);
     const [numberOfMoves, setNumberOfMoves] = useState(0);
     const [cards, setCards] = useState(() =>
-        createShuffledDeck(emojiPool)
+        createShuffledDeck(cardPool)
     );
 
+    useEffect(() => {
+        if (openCards.length === 2) {
+            setDisableAllClick(true);
+            setTimeout(() => { evaluate() }, 3500);
+            setDisableAllClick(true);
+        }
+    }, [openCards])
+
     const restartGame = () => {
-        // reShuffle and render deck
-        setCards(createShuffledDeck(emojiPool));
-
-        // clear everything in all stateS
-        // clear inactive cards
+        setCards(createShuffledDeck(cardPool));
         setInactiveCards([]);
-
-        // clear open cards
         setOpenCards([]);
-
-        // clear moves number
         setNumberOfMoves(0);
     }
 
@@ -82,9 +79,9 @@ export const GameBoard = () => {
         setOpenCards([...openCards, clickedCardId])
     }
 
-    const checkCardsType = (card1id, card2id, poolObj) => {
-        let card1Obj = poolObj.filter(card => card.id === card1id);
-        let card2Obj = poolObj.filter(card => card.id === card2id);
+    const checkCardsType = (card1Id, card2Id, deckArray) => {
+        let card1Obj = deckArray.filter(card => card.id === card1Id);
+        let card2Obj = deckArray.filter(card => card.id === card2Id);
         return (card1Obj[0].type === card2Obj[0].type) ? true : false;
     }
 
@@ -96,33 +93,27 @@ export const GameBoard = () => {
         setDisableAllClick(false);
         setOpenCards([])
     }
-    useEffect(() => {
-        console.log(inactiveCards)
-    }, [inactiveCards])
-
-    useEffect(() => {
-        if (openCards.length === 2) {
-            setDisableAllClick(true);
-            setTimeout(() => { evaluate() }, 3500);
-            setDisableAllClick(true);
-        } else if (openCards.length > 2) {
-            // this cant happen but if it does, remove the lastly added card
-        }
-    }, [openCards])
 
     return (
         <React.Fragment>
-            <h3>Memory Card Game</h3> <h4>Moves: {numberOfMoves}</h4>
-            <button type="button" className='restartGameButton' onClick={() => restartGame()}>Restart Game </button>
+            <h3>Memory Card Game</h3>
+            <h4>Moves: {numberOfMoves}</h4>
+            <button
+                type="button"
+                className='restartGameButton'
+                onClick={() => restartGame()}
+            >
+                Restart Game
+            </button>
             <div className={disableAllClick ? 'board disabledClick' : 'board'}>
-                {cards.map((eachCard) => {
+                {cards.map((card) => {
                     return (
-                        <IconsGenerator
-                            eachCard={eachCard}
-                            key={eachCard.id}
-                            onClick={() => handleCardClicked(eachCard.id)}
-                            isFlipped={openCards.includes(eachCard.id)}
-                            inactive={inactiveCards.includes(eachCard.id)}
+                        <Card
+                            card={card}
+                            key={card.id}
+                            onClick={() => handleCardClicked(card.id)}
+                            isFlipped={openCards.includes(card.id)}
+                            inactive={inactiveCards.includes(card.id)}
                         />
                     );
                 })}

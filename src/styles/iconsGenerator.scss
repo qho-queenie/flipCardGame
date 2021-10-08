@@ -1,9 +1,18 @@
 .tile {
   width: 100px;
   height: 100px;
-
   margin: 5px;
   perspective: 600px;
+
+  &.disappear {
+    visibility: hidden;
+  }
+
+  .dummy {
+    &.disappear {
+      visibility: hidden;
+    }
+  }
 
   .card {
     width: 100%;

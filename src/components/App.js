@@ -9,10 +9,9 @@
 // bonus: have player decide how many cards to play with 
 // bonus2: have player enter name
 
-
 import React from 'react'
-import { GameBoard } from './components/GameBoard'
 
+import GameBoard from './GameBoard'
 import './App.css';
 
 function App() {

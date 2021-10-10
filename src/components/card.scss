@@ -1,20 +1,14 @@
-.cardContainer {
+.Card {
   width: 100px;
   height: 100px;
   margin: 5px;
   perspective: 600px;
 
-  &.disappear {
+  &.inactive {
     visibility: hidden;
   }
 
-  .dummy {
-    &.disappear {
-      visibility: hidden;
-    }
-  }
-
-  .card {
+  .Card_cardContainer {
     width: 100%;
     height: 100%;
     border-radius: 10px;
@@ -23,11 +17,11 @@
     cursor: pointer;
     position: relative;
 
-    &.is-flipped {
+    &.isFlipped {
       transform: rotateY(180deg);
     }
 
-    .card__face {
+    .Card_face {
       position: absolute;
       height: 100%;
       width: 100%;
@@ -35,12 +29,12 @@
       backface-visibility: hidden;
     }
 
-    .card__face--front {
+    .Card_face--front {
       border-radius: 10% 25%;
       background: black;
     }
 
-    .card__face--back {
+    .Card_face--back {
       border-radius: 25% 10%;
       background: gray;
       transform: rotateY(180deg);

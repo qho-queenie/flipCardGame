@@ -1,19 +1,22 @@
 import React from 'react';
-import '../styles/card.scss';
+import cx from 'classnames'
 
-export const Card = ({ card, onClick, isFlipped, inactive }) => {
-    const { type, image } = card;
+import './card.scss';
 
-    return (
-        <div className={inactive ? 'cardContainer disappear' : 'cardContainer'} >
-            <div
-                className={isFlipped ? 'card is-flipped' : 'card'}
-                onClick={onClick}
-            >
-                <div className="card__face card__face--front" aria-label={type}></div>
-                <div className="card__face card__face--back">{image}</div>
-            </div>
-        </div >
-    )
+const Card = ({ card, onClick, isFlipped, inactive }) => {
+  const { type, image } = card;
+
+  return (
+    <div className={cx('Card', { inactive })} >
+      <div
+        className={cx('Card_cardContainer', { isFlipped })}
+        onClick={onClick}
+      >
+        <div className="Card_face Card_face--front" aria-label={type} />
+        <div className="Card_face Card_face--back">{image}</div>
+      </div>
+    </div >
+  )
 }
 
+export default Card;

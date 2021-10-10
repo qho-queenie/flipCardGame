@@ -1,0 +1,27 @@
+.GameBoard {
+  .GameBoard__gameInfoControl {
+    h3 {
+      margin: 15px 0;
+    }
+
+    h4 {
+      margin: 15px 0;
+    }
+
+    .GameBoard__restartGameButton {
+      cursor: pointer;
+    }
+  }
+}
+
+.GameBoard__board {
+  margin-top: 20px;
+  display: flex;
+  width: 460px;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  &.disabled {
+    pointer-events: none;
+  }
+}

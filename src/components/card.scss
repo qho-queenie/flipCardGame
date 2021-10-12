@@ -35,9 +35,13 @@
     }
 
     .Card_face--back {
+      font-size: 40px;
       border-radius: 25% 10%;
       background: gray;
       transform: rotateY(180deg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 }

@@ -1,3 +1,7 @@
+<h1 style="text-align: center;">Memory Card Game</h1>
+
+![App Cover Flip Card Game](src/images/appCover.png?raw=true 'App Cover')
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

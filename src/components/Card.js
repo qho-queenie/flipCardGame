@@ -12,8 +12,8 @@ const Card = ({ card, onClick, isFlipped, inactive }) => {
         className={classnames('Card__container', { isFlipped })}
         onClick={onClick}
       >
-        <div className="cardFace front" aria-label={type} />
-        <div className="cardFace back">{image}</div>
+        <div className='Card_face Card_face--front' aria-label={type} />
+        <div className='Card_face Card_face--back'>{image}</div>
       </div>
     </div >
   )

@@ -21,23 +21,23 @@
       transform: rotateY(180deg);
     }
 
-    .cardFace {
+    .Card_face {
       position: absolute;
       height: 100%;
       width: 100%;
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
+    }
 
-      &.front {
-        border-radius: 10% 25%;
-        background: black;
-      }
+    .Card_face--front {
+      border-radius: 10% 25%;
+      background: black;
+    }
 
-      &.back {
-        border-radius: 25% 10%;
-        background: gray;
-        transform: rotateY(180deg);
-      }
+    .Card_face--back {
+      border-radius: 25% 10%;
+      background: gray;
+      transform: rotateY(180deg);
     }
   }
 }

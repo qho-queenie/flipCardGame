@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import cx from 'classnames'
+import classnames from 'classnames'
 
 import Card from './Card'
 import './gameBoard.scss'
@@ -48,7 +48,7 @@ const shuffleAndCreateDeck = deck => {
     count--;
     [deck[count], deck[randomPick]] = [deck[randomPick], deck[count]];
   }
-  return deck.map(eachCard => ({ ...eachCard, 'id': uuidv4() }));
+  return deck.map(card => ({ ...card, 'id': uuidv4() }));
 }
 
 const GameBoard = () => {
@@ -75,18 +75,18 @@ const GameBoard = () => {
   }
 
   const handleCardClicked = (cardId) => {
-    setNumberOfMoves(numberOfMoves => numberOfMoves + 1);
+    setNumberOfMoves(numberOfMoves + 1);
     setOpenedCards([...openedCards, cardId]);
   }
 
-  const checkCardInfo = (cardId) => {
+  const getCardById = (cardId) => {
     const cardToFind = cards.find(({ id }) => id === cardId);
     return cardToFind;
   }
 
   const evaluate = () => {
     const [card1, card2] = openedCards;
-    if ((checkCardInfo(card1)).type === (checkCardInfo(card2)).type) {
+    if ((getCardById(card1)).type === (getCardById(card2)).type) {
       setInactiveCards([...inactiveCards, card1, card2])
     }
     setDisabled(false);
@@ -94,34 +94,34 @@ const GameBoard = () => {
   }
 
   return (
-    <React.Fragment>
-      <div className='GameBoard'>
-        <div className='GameBoard__gameInfoControl'>
-          <h3>Memory Card Game</h3>
-          <h4>Moves: {numberOfMoves}</h4>
-          <button
-            type="button"
-            className='GameBoard__restartGameButton'
-            onClick={restartGame}
-          >
-            Restart Game
-          </button>
-        </div>
-        <div className={cx('GameBoard__board', { disabled })}>
-          {cards.map((card) => {
-            return (
-              <Card
-                card={card}
-                key={card.id}
-                onClick={() => handleCardClicked(card.id)}
-                isFlipped={openedCards.includes(card.id)}
-                inactive={inactiveCards.includes(card.id)}
-              />
-            );
-          })}
-        </div>
+    <div className='GameBoard'>
+      <div className='GameBoard__gameInfo'>
+        <h3>Memory Card Game</h3>
+        <h4>Moves: {numberOfMoves}</h4>
       </div>
-    </React.Fragment>
+
+      <button
+        type="button"
+        className='GameBoard__restartGameButton'
+        onClick={restartGame}
+      >
+        Restart Game
+        </button>
+
+      <div className={classnames('GameBoard__board', { disabled })}>
+        {cards.map((card) => {
+          return (
+            <Card
+              card={card}
+              key={card.id}
+              onClick={() => handleCardClicked(card.id)}
+              isFlipped={openedCards.includes(card.id)}
+              inactive={inactiveCards.includes(card.id)}
+            />
+          );
+        })}
+      </div>
+    </div>
   )
 }
 

@@ -11,7 +11,7 @@
 
 import React from 'react'
 
-import GameBoard from './GameBoard'
+import GameBoard from './components/GameBoard'
 import './App.css';
 
 function App() {

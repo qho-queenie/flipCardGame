@@ -63,9 +63,17 @@ const GameBoard = () => {
   useEffect(() => {
     if (openedCards.length === 2) {
       setDisabled(true);
-      setTimeout(() => { evaluate() }, 3500);
+      setTimeout(() => { evaluate() }, 1500);
     }
   }, [openedCards])
+
+  useEffect(() => {
+    if (inactiveCards.length === cards.length) {
+
+      alert(`its a win with ${numberOfMoves} moves`);
+      restartGame();
+    }
+  }, [inactiveCards])
 
   const restartGame = () => {
     setCards(shuffleAndCreateDeck([...cardPool, ...cardPool]));

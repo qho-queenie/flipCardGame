@@ -21,7 +21,7 @@
       transform: rotateY(180deg);
     }
 
-    .Card_face {
+    .Card__face {
       position: absolute;
       height: 100%;
       width: 100%;
@@ -29,7 +29,7 @@
       backface-visibility: hidden;
     }
 
-    .Card_face--front {
+    .Card__face--front {
       border-radius: 10% 25%;
       background: black;
     }
